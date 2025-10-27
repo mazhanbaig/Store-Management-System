@@ -7,67 +7,76 @@
     <title>StoreSync - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .navbar-shadow {
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .card-shadow {
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .progress-bar {
-            transition: width 0.8s ease-in-out;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="bg-gray-50">
 
-    <!-- Navbar -->
-    <nav class="bg-white navbar-shadow sticky top-0 z-50">
+    <!-- Simple & Clean Navbar -->
+    <nav class="bg-white shadow sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <!-- Left -->
-                <div class="flex items-center">
-                    <i class="fas fa-store text-blue-500 text-2xl mr-2"></i>
-                    <span class="text-xl font-bold text-gray-800">StoreSync</span>
-                    <div class="hidden md:ml-8 md:flex md:space-x-6">
-                        <a href="index.html" class="text-blue-600 font-medium">Dashboard</a>
-                        <a href="addProduct.html" class="text-gray-600 font-medium">Add Products</a>
-                        <a href="inventory.html" class="text-gray-600 font-medium">Inventory</a>
+            <div class="flex justify-between items-center h-16">
+                <!-- Left: Logo & Links -->
+                <div class="flex items-center space-x-6">
+                    <!-- Logo -->
+                    <div class="flex items-center space-x-2">
+                        <div class="h-10 w-10 rounded-xl bg-blue-500 flex items-center justify-center text-white">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <span class="text-xl font-bold text-gray-800">StoreSync</span>
+                    </div>
+    
+                    <!-- Navigation Links -->
+                    <div class="hidden md:flex space-x-3">
+                        <a href="index.html"
+                            class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700 font-medium hover:bg-blue-100 transition">Dashboard</a>
+                        <a href="addProduct.html"
+                            class="px-3 py-2 rounded-lg text-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800 transition">Add
+                            Products</a>
+                        <a href="inventory.html"
+                            class="px-3 py-2 rounded-lg text-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800 transition">Inventory</a>
                     </div>
                 </div>
-                <!-- Right -->
-                <div class="flex items-center text-sm">
-                    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <span class="text-blue-600 font-medium">A</span>
+    
+                <!-- Right: User -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notification -->
+                    <button class="p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition">
+                        <i class="fas fa-bell"></i>
+                    </button>
+    
+                    <!-- Profile -->
+                    <div class="flex items-center space-x-2">
+                        <div
+                            class="h-9 w-9 rounded-full bg-blue-500 flex items-center justify-center text-white font-medium">
+                            A</div>
+                        <div class="hidden md:block">
+                            <p class="text-sm font-medium text-gray-800">Admin</p>
+                        </div>
                     </div>
-                    <span class="ml-2 text-gray-700 font-medium hidden md:block">Admin</span>
                 </div>
             </div>
         </div>
+    
+        <!-- Mobile Links -->
+        <div class="md:hidden border-t border-gray-100">
+            <div class="flex justify-around py-2">
+                <a href="index.html" class="flex flex-col items-center text-blue-600">
+                    <i class="fas fa-chart-pie"></i>
+                    <span class="text-xs">Dashboard</span>
+                </a>
+                <a href="addProduct.html" class="flex flex-col items-center text-gray-600">
+                    <i class="fas fa-plus-circle"></i>
+                    <span class="text-xs">Add</span>
+                </a>
+                <a href="inventory.html" class="flex flex-col items-center text-gray-600">
+                    <i class="fas fa-boxes"></i>
+                    <span class="text-xs">Inventory</span>
+                </a>
+            </div>
+        </div>
     </nav>
+
 
     <!-- Dashboard Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -78,139 +87,78 @@
         </div>
 
         <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <!-- Total Products -->
-            <div class="bg-white rounded-xl card-shadow p-6 fade-in">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+        
+            <!-- Products Sold This Month -->
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-600 text-sm">Total Products</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1" id="totalProducts">0</h3>
+                        <p class="text-gray-500 text-sm">Products Sold This Month</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1" id="productsSold">0</h3>
                     </div>
                     <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
                         <i class="fas fa-boxes text-blue-600"></i>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="flex items-center text-sm text-green-600">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>5 new this week</span>
-                    </div>
-                </div>
             </div>
-
-            <!-- Total Sales -->
-            <div class="bg-white rounded-xl card-shadow p-6 fade-in">
+        
+            <!-- Total Sales Value This Month -->
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-600 text-sm">Total Sales</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1" id="totalSales">0</h3>
+                        <p class="text-gray-500 text-sm">Total Sales Value</p>
+                        <h3 class="text-2xl font-bold text-gray-800 mt-1" id="totalSales">PKR 0</h3>
                     </div>
                     <div class="h-12 w-12 rounded-full bg-green-100 flex items-center justify-center">
                         <i class="fas fa-shopping-cart text-green-600"></i>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="flex items-center text-sm text-green-600">
-                        <i class="fas fa-arrow-up mr-1"></i>
-                        <span>12% from last week</span>
+            </div>
+        
+            <!-- Highest Sales Product -->
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-gray-500 text-sm">Highest Sales Product</p>
+                        <h3 class="text-xl font-bold text-gray-800 mt-1" id="highestSalesProduct">-</h3>
+                    </div>
+                    <div class="h-12 w-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                        <i class="fas fa-dollar-sign text-yellow-600"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Top Selling -->
-            <div class="bg-white rounded-xl card-shadow p-6 fade-in">
+        
+            <!-- Most Sold Product -->
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-600 text-sm">Top Selling</p>
-                        <h3 class="text-xl font-bold text-gray-800 mt-1" id="topProduct">-</h3>
+                        <p class="text-gray-500 text-sm">Most Sold Product</p>
+                        <h3 class="text-xl font-bold text-gray-800 mt-1" id="mostSold">-</h3>
                     </div>
                     <div class="h-12 w-12 rounded-full bg-purple-100 flex items-center justify-center">
                         <i class="fas fa-trophy text-purple-600"></i>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="text-sm text-gray-600" id="topProductSales">0 sales</div>
-                </div>
             </div>
-
-            <!-- Low Stock -->
-            <div class="bg-white rounded-xl card-shadow p-6 fade-in">
+        
+            <!-- Least Sold Product -->
+            <div class="bg-white rounded-xl shadow p-6 flex flex-col justify-between">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-gray-600 text-sm">Low Stock</p>
-                        <h3 class="text-2xl font-bold text-gray-800 mt-1" id="lowStockCount">0</h3>
+                        <p class="text-gray-500 text-sm">Least Sold Product</p>
+                        <h3 class="text-xl font-bold text-gray-800 mt-1" id="leastSold">-</h3>
                     </div>
                     <div class="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center">
-                        <i class="fas fa-exclamation-triangle text-red-600"></i>
+                        <i class="fas fa-arrow-down text-red-600"></i>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="text-sm text-red-600">Need restocking</div>
-                </div>
             </div>
+        
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Sales Chart -->
-            <div class="lg:col-span-2">
-                <div class="bg-white rounded-xl card-shadow p-6 fade-in">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-bold text-gray-800">Sales Performance</h2>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-sm">Week</button>
-                            <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm">Month</button>
-                            <button class="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-sm">Year</button>
-                        </div>
-                    </div>
-                    <div class="h-64 flex items-end space-x-4" id="salesChart">
-                        <!-- Chart will be populated by JavaScript -->
-                    </div>
-                </div>
-            </div>
 
-            <!-- Quick Actions -->
-            <div class="lg:col-span-1">
-                <div class="bg-white rounded-xl card-shadow p-6 fade-in">
-                    <h2 class="text-xl font-bold text-gray-800 mb-6">Quick Actions</h2>
-                    <div class="space-y-4">
-                        <a href="addProduct.html"
-                            class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
-                            <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center mr-3">
-                                <i class="fas fa-plus text-blue-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-800">Add New Product</h3>
-                                <p class="text-sm text-gray-600">Add items to your inventory</p>
-                            </div>
-                        </a>
-
-                        <a href="inventory.html"
-                            class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition">
-                            <div class="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center mr-3">
-                                <i class="fas fa-boxes text-green-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-800">View Inventory</h3>
-                                <p class="text-sm text-gray-600">Check stock levels</p>
-                            </div>
-                        </a>
-
-                        <a href="#"
-                            class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition">
-                            <div class="h-10 w-10 rounded-lg bg-purple-100 flex items-center justify-center mr-3">
-                                <i class="fas fa-chart-bar text-purple-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-medium text-gray-800">Generate Report</h3>
-                                <p class="text-sm text-gray-600">Create sales reports</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Product Performance -->
+        <!-- Product Performance Table -->
         <div class="mt-8 bg-white rounded-xl card-shadow p-6 fade-in">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold text-gray-800">Product Performance</h2>
@@ -231,7 +179,6 @@
                         </tr>
                     </thead>
                     <tbody id="productsTable">
-                        <!-- Products will be populated by JavaScript -->
                         <tr>
                             <td colspan="5" class="py-8 text-center text-gray-500">
                                 <i class="fas fa-box-open text-3xl mb-2 block"></i>
@@ -245,145 +192,7 @@
         </div>
     </div>
 
-    <script>
-        // Store Management Dashboard
-        class Dashboard {
-            constructor() {
-                this.products = this.loadProducts();
-                this.init();
-            }
-
-            // Load products from localStorage
-            loadProducts() {
-                const stored = localStorage.getItem('storeProducts');
-                return stored ? JSON.parse(stored) : [];
-            }
-
-            // Initialize the dashboard
-            init() {
-                this.updateStats();
-                this.updateProductsTable();
-                this.updateSalesChart();
-            }
-
-            // Update dashboard statistics
-            updateStats() {
-                // Total Products
-                document.getElementById('totalProducts').textContent = this.products.length;
-
-                // Total Sales
-                const totalSales = this.products.reduce((sum, product) => sum + (product.sales || 0), 0);
-                document.getElementById('totalSales').textContent = totalSales;
-
-                // Top Selling Product
-                if (this.products.length > 0) {
-                    const topProduct = [...this.products].sort((a, b) => (b.sales || 0) - (a.sales || 0))[0];
-                    if (topProduct && topProduct.sales > 0) {
-                        document.getElementById('topProduct').textContent = topProduct.name;
-                        document.getElementById('topProductSales').textContent = `${topProduct.sales} sales`;
-                    } else {
-                        document.getElementById('topProduct').textContent = '-';
-                        document.getElementById('topProductSales').textContent = '0 sales';
-                    }
-
-                    // Low Stock Count (assuming products have stock property)
-                    const lowStockCount = this.products.filter(p => p.stock <= 5).length;
-                    document.getElementById('lowStockCount').textContent = lowStockCount;
-                }
-
-                // Product Count
-                document.getElementById('productCount').textContent = this.products.length;
-            }
-
-            // Update products table
-            updateProductsTable() {
-                const tableBody = document.getElementById('productsTable');
-
-                if (this.products.length === 0) {
-                    tableBody.innerHTML = `
-                        <tr>
-                            <td colspan="5" class="py-8 text-center text-gray-500">
-                                <i class="fas fa-box-open text-3xl mb-2 block"></i>
-                                No products added yet. <a href="addProduct.html" class="text-blue-600 hover:underline">Add your first product</a>
-                            </td>
-                        </tr>
-                    `;
-                    return;
-                }
-
-                // Sort by sales (highest first)
-                const sortedProducts = [...this.products].sort((a, b) => (b.sales || 0) - (a.sales || 0));
-
-                tableBody.innerHTML = sortedProducts.map(product => {
-                    const sales = product.sales || 0;
-                    const status = sales >= 10 ? 'High' : sales >= 5 ? 'Medium' : 'Low';
-                    const statusColor = sales >= 10 ? 'text-green-600 bg-green-100' :
-                        sales >= 5 ? 'text-yellow-600 bg-yellow-100' : 'text-red-600 bg-red-100';
-
-                    return `
-                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
-                            <td class="py-4 px-4 font-medium text-gray-800">${product.name}</td>
-                            <td class="py-4 px-4 capitalize">${product.category}</td>
-                            <td class="py-4 px-4">${product.price ? `$${product.price.toFixed(2)}` : 'Not set'}</td>
-                            <td class="py-4 px-4">
-                                <div class="flex items-center">
-                                    <span class="font-medium mr-2">${sales}</span>
-                                    <div class="w-20 bg-gray-200 rounded-full h-2">
-                                        <div class="bg-blue-600 h-2 rounded-full progress-bar" style="width: ${Math.min(sales * 10, 100)}%"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-4 px-4">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium ${statusColor}">${status}</span>
-                            </td>
-                        </tr>
-                    `;
-                }).join('');
-            }
-
-            // Update sales chart
-            updateSalesChart() {
-                const chartContainer = document.getElementById('salesChart');
-
-                if (this.products.length === 0) {
-                    chartContainer.innerHTML = `
-                        <div class="w-full h-full flex items-center justify-center text-gray-400">
-                            <div class="text-center">
-                                <i class="fas fa-chart-bar text-4xl mb-2 block"></i>
-                                <p>No sales data available</p>
-                            </div>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // Get top 5 products by sales
-                const topProducts = [...this.products]
-                    .sort((a, b) => (b.sales || 0) - (a.sales || 0))
-                    .slice(0, 5);
-
-                // Find max sales for scaling
-                const maxSales = Math.max(...topProducts.map(p => p.sales || 0), 1);
-
-                chartContainer.innerHTML = topProducts.map(product => {
-                    const height = ((product.sales || 0) / maxSales) * 100;
-                    return `
-                        <div class="flex flex-col items-center flex-1">
-                            <div class="w-full bg-gradient-to-t from-blue-500 to-blue-700 rounded-t-lg transition-all duration-500 hover:opacity-80" 
-                                 style="height: ${height}%"></div>
-                            <div class="mt-2 text-xs text-center truncate w-full">${product.name}</div>
-                            <div class="text-xs text-gray-500">${product.sales || 0}</div>
-                        </div>
-                    `;
-                }).join('');
-            }
-        }
-
-        // Initialize the dashboard when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new Dashboard();
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 
 </html>
