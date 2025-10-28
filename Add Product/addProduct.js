@@ -48,7 +48,7 @@ function insertProducts() {
         row.innerHTML = `
             <td class="py-2">${p.productName}</td>
             <td class="py-2">${p.productCategory}</td>
-            <td class="py-2">PKR ${p.productPrice || "0"}</td>
+            <td class="py-2">PKR ${(p.productPrice / p.productQuantity).toFixed(2) || 0}</td>
             <td class="py-2">${p.dateAdded}</td>
             <td class="py-2">${p.productQuantity}</td>
             <td class="py-2 text-red-500 cursor-pointer delete-btn" data-index="${index}">🗑️</td>
@@ -102,12 +102,12 @@ addProductBtn.addEventListener("click", () => {
     const productInfo = {
         productName: productNameInput.value.trim(),
         productCategory: productCategoryInput.value,
-        productPrice: Number(productPriceInput.value.trim()) || 0,   // convert to number
-        productQuantity: Number(quantityInput.value.trim()) || 0, 
+        productPrice: Number(productPriceInput.value.trim()) * Number(quantityInput.value.trim()),   // convert to number
+        productQuantity: Number(quantityInput.value.trim()) , 
         dateAdded: new Date().toLocaleString(),
     };
 
-    if (!productInfo.productName || !productInfo.productCategory || !productInfo.productQuantity) {
+    if (!productInfo.productName || !productInfo.productCategory || !productInfo.productQuantity || !productInfo.productPrice) {
         alert("Please fill all required fields!");
         return;
     }
