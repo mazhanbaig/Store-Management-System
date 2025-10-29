@@ -275,13 +275,22 @@ document.addEventListener("DOMContentLoaded", updateQuickStats);
 
 
 
-
 // 🔹 Get all HTML references
 const performancePeriod = document.getElementById("performancePeriod");
 const performanceSort = document.getElementById("performanceSort");
 const updatePerformanceBtn = document.getElementById("updatePerformance");
 const performanceBody = document.getElementById("performanceBody");
 const performanceEmpty = document.getElementById("performanceEmpty");
+
+// ✅ When Update button is clicked
+updatePerformanceBtn.addEventListener('click', () => {
+  // Get selected values
+  let performancePeriodVal = performancePeriod.value;
+  let performanceSortVal = performanceSort.value;
+
+  // Call insertData again with selected values
+  insertData(performancePeriodVal, performanceSortVal);
+});
 
 // 🔹 Get products from localStorage
 const getProductsFromStorage = () => {
@@ -292,19 +301,12 @@ const getProductsFromStorage = () => {
 const getProdSellingInfo = (prodName) => {
   let products = getProductsFromStorage();
 
-  let prodAllSale = products.filter((p) => {
-    return p.productName == prodName;
-  });
+  let prodAllSale = products.filter((p) => p.productName == prodName);
 
-  let prodTotalSalePrice = prodAllSale.reduce((prev, curr) => {
-    return prev + curr.productPrice;
-  }, 0);
+  let prodTotalSalePrice = prodAllSale.reduce((prev, curr) => prev + curr.productPrice, 0);
+  let prodTotalQuantitySale = prodAllSale.reduce((prev, curr) => prev + curr.productQuantity, 0);
 
-  let prodTotalQuantitySale = prodAllSale.reduce((prev, curr) => {
-    return prev + curr.productQuantity;
-  }, 0);
-
-  // 🟢 New fields (no logic change)
+  // 🟢 Performance logic (same)
   let prodFrequency = prodAllSale.length;
   let prodPerformance = "Average";
   if (prodTotalSalePrice > 50000) prodPerformance = "Excellent";
@@ -318,7 +320,9 @@ const getProdSellingInfo = (prodName) => {
   };
 };
 
-let insertData = () => {
+// 🔹 Insert / update performance table
+// 🔹 Insert / update performance table (REPLACE your existing insertData with this)
+let insertData = (timeDuration, property) => {
   const products = getProductsFromStorage();
   performanceBody.innerHTML = "";
 
@@ -329,40 +333,62 @@ let insertData = () => {
 
   performanceEmpty.classList.add("hidden");
 
+  // Build a list of unique products with their aggregated info
   let alreadyAdded = {};
+  let productData = [];
 
   products.forEach((p) => {
-    if (alreadyAdded[p.productName]) {
-      return;
-    } else {
-      alreadyAdded[p.productName] = true;
+    if (alreadyAdded[p.productName]) return;
+    alreadyAdded[p.productName] = true;
 
-      let prodSellingInfo = getProdSellingInfo(p.productName);
+    let prodSellingInfo = getProdSellingInfo(p.productName);
 
-      const row = document.createElement("tr");
-      row.classList.add("hover:bg-gray-50");
-      row.innerHTML = `
-        <td class="px-4 py-3 text-sm font-medium text-gray-900">${p.productName}</td>
-        <td class="px-4 py-3 text-sm text-gray-500">${p.productCategory}</td>
-        <td class="px-4 py-3 text-sm text-gray-500">${prodSellingInfo.prodTotalQuantitySale}</td>
-        <td class="px-4 py-3 text-sm text-gray-500">PKR ${prodSellingInfo.prodTotalSalePrice.toLocaleString()}</td>
-        <td class="px-4 py-3 text-sm text-gray-500">${prodSellingInfo.prodFrequency} time${prodSellingInfo.prodFrequency > 1 ? "s" : ""}</td>
-        <td class="px-4 py-3">
-          <span class="px-2 inline-flex text-xs font-semibold rounded-full ${prodSellingInfo.prodPerformance === "Excellent"
-          ? "bg-green-100 text-green-800"
-          : prodSellingInfo.prodPerformance === "Good"
-            ? "bg-yellow-100 text-yellow-800"
-            : "bg-gray-100 text-gray-800"
-        }">
-            ${prodSellingInfo.prodPerformance}
-          </span>
-        </td>
-      `;
-      performanceBody.appendChild(row);
-    }
+    productData.push({
+      productName: p.productName,
+      productCategory: p.productCategory,
+      prodTotalQuantitySale: prodSellingInfo.prodTotalQuantitySale,
+      prodTotalSalePrice: prodSellingInfo.prodTotalSalePrice,
+      prodFrequency: prodSellingInfo.prodFrequency,
+      prodPerformance: prodSellingInfo.prodPerformance
+    });
+  });
+
+  // Sort the aggregated productData (only if property provided)
+  if (property === "quantity") {
+    productData.sort((a, b) => b.prodTotalQuantitySale - a.prodTotalQuantitySale);
+  } else if (property === "revenue") {
+    productData.sort((a, b) => b.prodTotalSalePrice - a.prodTotalSalePrice);
+  } else if (property === "frequency") {
+    productData.sort((a, b) => b.prodFrequency - a.prodFrequency);
+  }
+
+  // Render rows from the sorted productData (same row markup you used)
+  productData.forEach((p) => {
+    const row = document.createElement("tr");
+    row.classList.add("hover:bg-gray-50");
+    row.innerHTML = `
+      <td class="px-4 py-3 text-sm font-medium text-gray-900">${p.productName}</td>
+      <td class="px-4 py-3 text-sm text-gray-500">${p.productCategory}</td>
+      <td class="px-4 py-3 text-sm text-gray-500">${p.prodTotalQuantitySale}</td>
+      <td class="px-4 py-3 text-sm text-gray-500">PKR ${p.prodTotalSalePrice.toLocaleString()}</td>
+      <td class="px-4 py-3 text-sm text-gray-500">${p.prodFrequency} time${p.prodFrequency > 1 ? "s" : ""}</td>
+      <td class="px-4 py-3">
+        <span class="px-2 inline-flex text-xs font-semibold rounded-full ${p.prodPerformance === "Excellent"
+        ? "bg-green-100 text-green-800"
+        : p.prodPerformance === "Good"
+          ? "bg-yellow-100 text-yellow-800"
+          : "bg-gray-100 text-gray-800"
+      }">
+          ${p.prodPerformance}
+        </span>
+      </td>
+    `;
+    performanceBody.appendChild(row);
   });
 };
 
+
+// 🔹 On page load show default (This Month + Revenue)
 document.addEventListener("DOMContentLoaded", () => {
-  insertData();
+  insertData('month', 'revenue');
 });
