@@ -326,7 +326,7 @@ displayDashboard();
                                     </div>
 
                                 </div>
-
+{/* endd  */}
                                 <!-- Business Insights Section -->
                                 <div class="bg-white rounded-xl shadow p-6 mb-8 border border-gray-100">
                                     <div class="flex items-center justify-between mb-6">
